@@ -1,6 +1,7 @@
 # GitHub Actions workflow that builds, the project then uses Go Releaser to
 # deploy the project as a GitHub Release.
 # .github/workflows/go-releaser.yml
+# Extra comment to push
 name: goreleaser
 
 on:
@@ -12,9 +13,9 @@ on:
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
-  # id-token: write
+  packages: write
+  issues: write
+  id-token: write
 
 jobs:
   goreleaser:
@@ -35,8 +36,10 @@ jobs:
         with:
           # either 'goreleaser' (default) or 'goreleaser-pro'
           distribution: goreleaser
+          # specify workdir since main function is not in root
+          workdir: ./client
           # 'latest', 'nightly', or a semver
           version: "~> v2"
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}GITHUB_TOKEN
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
